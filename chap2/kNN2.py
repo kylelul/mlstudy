@@ -69,8 +69,36 @@ def classifyPerson():
     percentTats = float(raw_input("percentage of time spent playing video games?"))
     ffMiles = float(raw_input("frequent flier miles earned per year?"))
     iceCream = float(raw_input("liters of ice cream consumed per year?"))
-    datingDataMat, datingLabels = file2matrix('datingTestSet.txt')
+    datingDataMat, datingLabels = file2matrix('datingTestSet2.txt')
     normMat, ranges, minVals = autoNorm(datingDataMat)
     inArr = array([ffMiles, percentTats, iceCream])
     classifierResult = classify0((inArr-minVals)/ranges,normMat,datingLabels,3)
     print "You will probably like this person: ", resultList[classifierResult - 1]
+
+def img2vector(filename):
+    #上面的数据训练方法是对应一维向量的，所以要把32*32的图片信息转进1x1024的向量
+    returnVect = zeros((1,1024)) #一行，长度为1024的，全0向量
+    fr = open(filename)
+    for i in range(32):
+        # i 0-31 行 逐行阅读
+        lineStr = fr.readline()
+        # j 0-31 每一行逐列阅读
+        for j in range(32):
+            # 填充1024向量，0-31、32-63.... ，填充数字
+            returnVect[0,32*i+j] = int(lineStr[j])
+    return returnVect
+
+def handwritingClassTest():
+    hwLabels = []
+    # .listdir() 读取该文件夹里的所有文件
+    trainingFileList = listdir('trainingDigits')
+    m = len(trainingFileList)
+    # 行数和文件数一致的零矩阵
+    trainingMat = zeros((m,1024))
+    for i in range(m):
+
+
+
+
+
+
